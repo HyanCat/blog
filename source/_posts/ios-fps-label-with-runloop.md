@@ -1,7 +1,11 @@
 ---
-title: Runloop 实践 FPSLabel
-date: 2016-04-06 12:51:07
+title: iOS Runloop 制作一个 FPSLabel
+date: 2016-04-11 12:51:07
 tags:
+    - iOS
+    - runloop
+    - label
+category: iOS
 ---
 
 ## Runloop 机制
@@ -11,7 +15,7 @@ tags:
 
 2. CADisplayLink 是一个和屏幕刷新率一致的定时器。查看 CADisplayLink.h 文件，它提供了四个方法
 
-	```
+	```ObjectiveC
 	// 新建屏幕刷新同步定时器，屏幕每刷新一次（一帧），调用一次 selector
 	+ (CADisplayLink *)displayLinkWithTarget:(id)target selector:(SEL)sel;
 	// 添加到某个 runloop 中
@@ -22,11 +26,13 @@ tags:
 	- (void)invalidate;
 	```
 
+<!-- more -->
+
 ## 视图
 
 FPSLabel 这种调试性工具，需要一直显示在屏幕最上层，那我们直接将它添加到最开始创建的 UIWindow 上。
 
-```
+```ObjectiveC
 + (instancetype)showInWindow:(UIWindow *)window
 {
     HyFPSLabel *label = [[HyFPSLabel alloc] initWithFrame:CGRectZero];
@@ -42,7 +48,7 @@ FPSLabel 这种调试性工具，需要一直显示在屏幕最上层，那我�
 
 这里 frame 为 CGRectZero，因为要支持不同屏幕以及旋转，所以 Autolayout 是必须的。
 
-```
+```ObjectiveC
 label.translatesAutoresizingMaskIntoConstraints = NO;
 // 这里一定要注意，使用手写原生 autolayout 的话，需要设置 translatesAutoresizingMaskIntoConstraints 为 NO
 
@@ -88,14 +94,14 @@ else {
 
 接下来就是要完善这个 label 自身了。在 init 方法中需要创建并添加 CADisplayLink：
 
-```
+```ObjectiveC
 _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
 [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
 ```
 
 这里 `tick:` 这个 selector 就是和屏幕刷新率保持一致的方法。在这个方法里，我们累计时间计算每秒执行次数，就是刷新率了。
 
-```
+```ObjectiveC
 - (void)tick:(CADisplayLink *)displayLink
 {
 	CFTimeInterval currentTime = displayLink.timestamp;
@@ -117,7 +123,7 @@ _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick
 `self.fps` 便是得到的FPS帧率。
 那么最后一步便是将它显示在前面做好的 label 上了。这里颜色根据帧率从绿色到红色变化。`_displayLink` 方法：
 
-```
+```ObjectiveC
 CGFloat hue = self.fps > 24 ? (self.fps - 24) / 120.f : 0;
 self.textColor = [UIColor colorWithHue:hue saturation:1 brightness:0.9 alpha:1];
 self.text = [NSString stringWithFormat:@"%@ FPS", @(self.fps)];
@@ -134,7 +140,7 @@ self.layer.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7f]
 然后在 `_displayLink` 方法中增加显示和隐藏的逻辑，以及渐隐渐现动画。
 这里延迟2秒无变化则自动隐藏（延迟必须大于1秒，因为帧率是按1秒计数来算的）
 
-```
+```ObjectiveC
 if (self.autoHide) {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fadeOut) object:nil];
     [self performSelector:@selector(fadeOut) withObject:nil afterDelay:2];
