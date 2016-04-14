@@ -14,7 +14,7 @@ timezone: Asia/Shanghai
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://hyancat.com
 root: /
-permalink: :year/:month/:day/:title/
+permalink: articles/:category/:title/
 permalink_defaults:
 
 # Directory
@@ -73,3 +73,26 @@ deploy:
   type: git
   repository: git@github.com:HyanCat/hyancat.github.io.git
   branch: master
+
+# All Minifier
+html_minifier:
+  enable: false
+  exclude: 
+css_minifier:
+  enable: true
+  exclude: 
+    - '*.min.css'
+js_minifier:
+  enable: true
+  mangle: true
+  output:
+  compress:
+  exclude: 
+    - '*.min.js'
+image_minifier:
+  enable: true
+  interlaced: false
+  multipass: false
+  optimizationLevel: 2
+  pngquant: false
+  progressive: false

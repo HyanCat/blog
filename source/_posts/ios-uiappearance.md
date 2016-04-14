@@ -87,21 +87,21 @@ Setter 方法都加断点调试：
 
 运行发现，在通过 appearance 设置属性的时候，并没有调用 setter 方法，由此可知 appearance 并不会生成实例，立即赋值。当 cardView 被添加到主视图（即视图树）中去的时候，才依次调用两个 setter 方法，调用栈如下
 
-![截图 2016-04-13 22时09分46秒](https://o.ruogoo.cn/image/74714a9392e3cdbbb09588ab870d1b93.png)
+![ios_uiappearance_image_1](https://o.ruogoo.cn/image/74714a9392e3cdbbb09588ab870d1b93.png)
 
 从 15 至 11 可以看出确实是加入到视图树中才触发的，从 7 至 2 可以基本猜测出，appearance 设置的属性，都以 Invocation 的形式存储到 _UIApperance 类中（事实上 _UIApperance 类中就有一个 _appearanceInvocations 数组），等到视图树 performUpdates 的时候，会去检查有没有相关的属性设置，有则 invoke。(这里可以看看 NSInvocation)
 
 紧接着，它进入了 bodyColor 的 setter
 
-![截图 2016-04-13 22时11分52秒](https://o.ruogoo.cn/image/47aac21a62666b58b4c3360290b58b56.png)
+![ios_uiappearance_image_2](https://o.ruogoo.cn/image/47aac21a62666b58b4c3360290b58b56.png)
 
 然后，当手动设置属性的时候，它是直接进入 setter 的。
 
-![截图 2016-04-13 22时11分07秒](https://o.ruogoo.cn/image/7867c26dc60298f99afce705d9f77e38.png)
+![ios_uiappearance_image_3](https://o.ruogoo.cn/image/7867c26dc60298f99afce705d9f77e38.png)
 
 到这里，基本清晰了。
 
-每一个实现 UIAppearance 协议的类，都会有一个 _UIApperance 实例，保存着这个类通过 appearance 设置属性的 invocations，在该类被添加或应用到视图树上的时候，它会检查并吊用这些属性设置。这样就实现了让所有该类的实例都自动统一属性。
+每一个实现 UIAppearance 协议的类，都会有一个 _UIApperance 实例，保存着这个类通过 appearance 设置属性的 invocations，在该类被添加或应用到视图树上的时候，它会检查并调用这些属性设置。这样就实现了让所有该类的实例都自动统一属性。
 
 当然，如果后面又手动设置了属性，肯定会覆盖了。从上面可以知道，appearance 生效是在被添加到视图树时，所以，在此之后设置 appearance，则不会起作用，而在手动设置属性之后被添加到视图树上，手动设置的会被覆盖。appearance 只是起到一个代理作用，在特定的时机，让代理替所有实例做同样的事。
 
@@ -116,7 +116,10 @@ Setter 方法都加断点调试：
 
 ## 使用
 
-研究清楚了，就知道怎么使用了。一般地，UIView 的子类，和直接调用 setter 一样，直接通过 appearance 对其设置属性，当然时机越早越好（如果没什么特殊需求的话）。别的需求可以考虑 UIAppearance 协议里另外几个方法来实现。
+
+1. 一般地，UIView 的子类，和直接调用 setter 一样，直接通过 appearance 对其设置属性，当然时机在被添加到视图树之前。
+2. 建议在 appearance 的属性后加上 `UI_APPEARANCE_SELECTOR` 宏。
+3. 复杂需求可以考虑 UIAppearance 协议里另外几个方法来实现。
 
 ----
 
