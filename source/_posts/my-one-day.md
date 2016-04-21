@@ -5,7 +5,7 @@ tags:
 category: 记事
 ---
 
-![my one day](https://o.ruogoo.cn/image/ff59be8c5a5dd4b8ff300edf2953a406.jpg)
+![my one day](https://o.ruogoo.cn/image/387c8cb246cda7a9ae72b0fc0fd22e86.jpg)
 
 8 点多起床洗漱完，倒一杯温热的白开水，坐在工作桌前，打开电脑，接上显示器，打开网易云音乐，听听古风或者许嵩，伴随着美妙的音乐，我代码的一天便开始了。
 
