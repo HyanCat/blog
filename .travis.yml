@@ -3,13 +3,15 @@ language: node_js
 node_js: node
 
 install:
-  - npm install
+  - npm i -g hexo-cli
+  - npm i
 
 script:
   - hexo cl
   - hexo g
 
 after_script:
+  - rm -rf .git
   - cd ./public
   - git init
   - git config user.name "HyanCat"
