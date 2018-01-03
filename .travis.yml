@@ -16,7 +16,7 @@ after_script:
   - git config user.name "HyanCat"
   - git config user.email "hyancat@live.cn"
   - git add .
-  - git commit -m "Auto update."
+  - git commit -m "Generate automatically."
   - git push --force --quiet "https://${GH_TOKEN}@github.com/HyanCat/hyancat.github.io.git" master:master
 
 branches:
