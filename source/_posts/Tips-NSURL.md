@@ -5,7 +5,11 @@ tags:
 category: iOS
 ---
 
-## NSURL 非常强大
+NSURL 非常强大，一些小细节可以更好地处理 url。
+
+<!-- more -->
+
+## Tips
 
 1. 所有用来表示 URL 的一定不要用 NSString。一切的资源都是 URL。
 

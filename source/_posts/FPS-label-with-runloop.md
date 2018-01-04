@@ -8,6 +8,10 @@ tags:
 category: iOS
 ---
 
+一步一步实现一个简单好用的监测 FPS 的控件。
+
+<!-- more -->
+
 ## Runloop 机制
 
 1. 关于 Runloop 机制看 ibireme 的这篇文章
@@ -25,8 +29,6 @@ category: iOS
 	// 销毁释放
 	- (void)invalidate;
 	```
-
-<!-- more -->
 
 ## 视图
 

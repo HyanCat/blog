@@ -29,7 +29,7 @@ Objective-C 对象总是分配在堆中，对象指针是分配在栈中。
 在实现文件中使用 `static const xxxx` 来定义“只在编译单元内可见的常量”，const 保证了常量不被修改，static 保证了该常量仅在定义此变量的编译单元中可见，所以也可不必加前缀。
 外界可见的常量，头文件中使用
 
-	extern NSString *const xxxx; 
+	extern NSString *const xxxx;
 
 常量会放在`全局符号表`中这里的 const 保证了常量指针不被修改。加类名或框架名前缀。
 
