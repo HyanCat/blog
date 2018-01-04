@@ -3,4 +3,4 @@
 	url = https://github.com/HyanCat/Hexo-Hyya.git
 [submodule "themes/vno"]
 	path = themes/vno
-	url = https://github.com/skx926/hexo-theme-vno.git
+	url = https://github.com/HyanCat/hexo-theme-vno.git
