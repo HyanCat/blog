@@ -5,7 +5,7 @@
 # Site
 title: HyanCat's Blog
 subtitle: 懒拭宝剑锋，流光不加少
-description:
+description: 我是小明
 author: HyanCat
 language: zh-CN
 timezone: Asia/Shanghai
@@ -39,7 +39,7 @@ relative_link: false
 future: true
 highlight:
   enable: true
-  line_number: true
+  line_number: false
   auto_detect: false
   tab_replace:
 
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hyya
+theme: vno
 
 disqus_shortname: hyancat
 
@@ -77,17 +77,17 @@ deploy:
 # All Minifier
 html_minifier:
   enable: false
-  exclude: 
+  exclude:
 css_minifier:
   enable: true
-  exclude: 
+  exclude:
     - '*.min.css'
 js_minifier:
   enable: true
   mangle: true
   output:
   compress:
-  exclude: 
+  exclude:
     - '*.min.js'
 image_minifier:
   enable: false
